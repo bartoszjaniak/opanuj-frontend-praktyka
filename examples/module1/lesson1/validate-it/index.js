@@ -1,34 +1,31 @@
-function validator() {
-  const input = document.getElementById('input');
-  const button = document.getElementById('button');
-  const button2 = document.getElementById('button2');
-  const result = document.getElementById('result');
 
-  button.addEventListener('click', () => {
-    if (input.value) {
-      if (Number.isInteger(input.value)) {
-        if (
-          Number(input.value) > 0 &&
-          Number(input.value) < 100 &&
-          Number(input.value) % 2 === 0
-        ) {
-          result.innerHTML = 'Valid';
-        } else {
-          result.innerHTML = 'Invalid';
-        }
-        result.innerHTML = 'Valid';
-      } else {
-        result.innerHTML = 'Invalid';
-      }
-    } else {
-      result.innerHTML = 'Invalid';
+const input = document.getElementById('input');
+const validateBtn = document.getElementById('button');
+const clearBtn = document.getElementById('button2');
+const result = document.getElementById('result');
+
+const checkLogic = (value) => Number(value) > 0 && Number(value) < 100 && Number(value) % 2 === 0;
+
+validateBtn.addEventListener('click', () => {
+    console.log(input.value, Number.isInteger(input.value), checkLogic(input.value)); // <- 20, false(?), true
+    if (!input.value || !Number.isInteger(input.value) || !checkLogic(input.value)) {
+        setResultMessage('Invalid');
+
+        return;
     }
-  });
 
-  button2.addEventListener('click', () => {
+    setResultMessage('Valid');
+
+    return;
+
+});
+
+clearBtn.addEventListener('click', () => {
     input.value = '';
     result.innerHTML = '';
-  });
+});
+
+function setResultMessage(message) {
+    result.innerHTML = message;
 }
 
-validator();
