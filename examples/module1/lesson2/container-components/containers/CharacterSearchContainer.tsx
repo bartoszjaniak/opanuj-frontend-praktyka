@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import CharacterList from '../components/CharacterList';
 import SearchForm from '../components/SearchForm';
 import SearchTitle from '../components/SearchTitle';
+import { fetchData } from '../providers/data-access';
 import { Character } from '../types/Character';
 
 function CharacterSearchContainer() {
@@ -12,12 +13,7 @@ function CharacterSearchContainer() {
 
   useEffect(() => {
     if (name || gender) {
-      fetch(
-        `https://rickandmortyapi.com/api/character/?name=${name}&gender=${gender}`
-      )
-        .then((response) => response.json())
-        .then((data) => setCharacters(data.results || []))
-        .catch((error) => console.error('Error fetching data:', error));
+        fetchData(name, gender).then((data) => setCharacters(data));
     }
   }, [name, gender]);
 
